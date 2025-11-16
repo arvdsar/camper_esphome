@@ -1,0 +1,79 @@
+esphome:
+  name: camper
+
+esp32:
+  board: nodemcu-32s
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+
+esp32_ble_tracker:
+
+
+# Enable Home Assistant API
+api:
+  password: ""
+
+ota:
+  - platform: esphome
+    password: ""
+
+wifi:
+  networks:
+  - ssid: !secret wifi_ssid
+    password: !secret wifi_password
+  - ssid: !secret starlink_ssid
+    password: !secret starlink_password
+
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Camper Fallback Hotspot"
+    password: "eqKXLipkzyJV"
+
+time:
+  - platform: sntp
+    id: sntp_time
+    timezone: Europe/Amsterdam
+    servers:
+     - 0.pool.ntp.org
+     - 1.pool.ntp.org
+     - 2.pool.ntp.org
+
+#captive_portal:
+
+bluetooth_proxy:
+  active: true
+
+  # Example configuration entry
+wireguard:
+  address: 192.168.4.10
+  private_key: !secret wireguard_privatekey
+  peer_endpoint: !secret home_domain
+  peer_public_key: !secret wireguard_peerpublickey
+
+  # Optional netmask (this is the default, no outgoing traffic
+  # will pass through the tunnel if omitted)
+  netmask: 255.255.255.255
+
+  # Optional endpoint port (WireGuard default if omitted)
+  peer_port: 8012
+
+  # Optional pre-shared key (omit if not in use)
+  #peer_preshared_key: XxYyZzWw...=
+
+  # Optional list of ip/mask (any host is allowed if omitted)
+  #peer_allowed_ips:
+  #  - x.y.z.0/24
+  #  - l.m.n.o/32  # the /32 can be omitted for single host
+  #  - [...]
+
+  # Optional keepalive (disabled by default)
+  peer_persistent_keepalive: 25s
+
+  require_connection_to_proceed: true
+
+
+

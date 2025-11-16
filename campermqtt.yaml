@@ -1,0 +1,65 @@
+#ESPHome Configuration to connect to Wireguard VPN server 
+#and use Bluetooth Proxy to homeassistant
+
+esphome:
+  name: camper
+
+esp32:
+  board: nodemcu-32s
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+
+esp32_ble_tracker:
+
+mopeka_ble:
+
+# Enable Home Assistant API
+#api:
+#  password: ""
+
+ota:
+  - platform: esphome
+    password: ""
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Camper Fallback Hotspot"
+    password: "eqKXLipkzyJV"
+
+captive_portal:
+
+mqtt:
+  broker: !secret home_domain
+  username: !secret mqtt_user
+  password: !secret mqtt_password
+  discover_ip: true
+  discovery: true
+
+sensor:
+  # Example using 11KG vertical propane tank.
+  - platform: mopeka_pro_check
+    mac_address: FF:FF:FF:FF:FF:FF
+    tank_type: EUROPE_11KG
+    temperature:
+        name: "Propane test temp"
+    level:
+        name: "Propane test level"
+    distance:
+        name: "Propane test distance"
+    battery_level:
+        name: "Propane test battery level"
+    signal_quality:
+        name: "Propane test read quality"
+    ignored_reads:
+        name: "Propane test ignored reads"
+    # Report sensor distance/level data for all equal or greater than
+    minimum_signal_quality: "LOW"
+    
+
