@@ -1,3 +1,6 @@
+#ESPHome Configuration to connect to Wireguard VPN server 
+#and use Bluetooth Proxy to homeassistant
+
 esphome:
   name: camper
 
