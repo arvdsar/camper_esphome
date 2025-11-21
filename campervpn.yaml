@@ -59,7 +59,7 @@ wireguard:
 
   # Optional netmask (this is the default, no outgoing traffic
   # will pass through the tunnel if omitted)
-  netmask: 255.255.255.255
+  netmask: 0.0.0.0
 
   # Optional endpoint port (WireGuard default if omitted)
   peer_port: 8012
@@ -76,7 +76,7 @@ wireguard:
   # Optional keepalive (disabled by default)
   peer_persistent_keepalive: 25s
 
-  require_connection_to_proceed: true
+  require_connection_to_proceed: false
 
 
 
