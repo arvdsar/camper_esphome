@@ -1,8 +1,8 @@
 #ESPHome Configuration to connect to Wireguard VPN server 
-#and use Bluetooth Proxy to homeassistant
+#and use Bluetooth Proxy and DS18B20 Temp sensor to homeassistant
 
 esphome:
-  name: camper
+  name: camperesp32a
 
 esp32:
   board: nodemcu-32s
@@ -29,6 +29,8 @@ wifi:
     password: !secret wifi_password
   - ssid: !secret starlink_ssid
     password: !secret starlink_password
+  - ssid: !secret wifi_boat_ssid
+    password: !secret wifi_boat_password
 
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
@@ -49,6 +51,18 @@ time:
 
 bluetooth_proxy:
   active: true
+
+# 1-Wire bus op D4
+one_wire:
+  - platform: gpio
+    pin: GPIO4
+
+sensor:
+  - platform: dallas_temp
+    name: "Camper Temperatuur 1"
+    update_interval: 60s
+    resolution: 9
+
 
   # Example configuration entry
 wireguard:
